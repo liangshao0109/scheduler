@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Course, { getCourseTerm } from './Course.js';
+import { signInWithGoogle } from '../utilities/firebase.js';
 
 const scheduleChanged = (selected, courses) => (
     selected.some(course => course !== courses[course.id])
@@ -32,12 +33,22 @@ const CourseList = ({ courses }) => {
 
 const terms = { F: 'Fall', W: 'Winter', S: 'Spring'};
 
+const SignInButton = () => (
+    <button className="btn btn-secondary btn-sm"
+        onClick={() => signInWithGoogle()}>
+      Sign In
+    </button>
+);
+
 const TermSelector = ({term, setTerm}) => (
-    <div className="btn-group">
-    { 
-        Object.values(terms)
-        .map(value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />)
-    }
+    <div className="btn-toolbar justify-content-between">
+        <div className="btn-group">
+        { 
+            Object.values(terms)
+            .map(value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />)
+        }
+        </div>
+        <SignInButton  />
     </div>
 );
 
